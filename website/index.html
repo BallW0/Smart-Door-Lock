@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartLock — Sistem Pintu Otomatis</title>
+    <meta name="description" content="Dashboard monitoring sistem pintu otomatis dengan face recognition dan keypad PIN.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="door-icon-wrap" id="doorIconWrap">
+                            <svg id="doorIcon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <span class="nav-label">Menu</span>
+                <a href="#" class="nav-item active" data-target="dashboard">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item" data-target="logs">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/>
+                    </svg>
+                    Riwayat Akses
+                </a>
+                <a href="#" class="nav-item" data-target="face-registration">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    Registrasi Wajah
+                </a>
+            </nav>
+
+            
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p id="pageSubtitle">Pantau status pintu secara real-time</p>
+                </div>
+                
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <!-- Door Status Card (big) -->
+                <div class="door-card">
+                    <div class="door-card-left">
+                        <div class="door-icon-wrap" id="doorIconWrap">
+                            <svg id="doorIcon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                        </div>
+                        <div class="door-info">
+                            <p class="door-label">Status Pintu</p>
+                            <h2 class="door-status" id="doorStatusText">TERKUNCI</h2>
+                            <p class="door-meta" id="doorMeta">Terakhir diperbarui: —</p>
+                        </div>
+                    </div>
+                    <div class="door-card-right">
+                        <div class="face-badge" id="faceBadge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/>
+                            </svg>
+                            <span id="faceStatusText">Menunggu Wajah</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon stat-blue">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="stat-label">Total Log</p>
+                            <h3 class="stat-value" id="statTotalLogs">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-green">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="stat-label">Akses Diberikan</p>
+                            <h3 class="stat-value" id="statGranted">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-red">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="stat-label">Akses Ditolak</p>
+                            <h3 class="stat-value" id="statDenied">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon stat-orange">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="stat-label">Hari Ini</p>
+                            <h3 class="stat-value" id="statToday">0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Aktivitas Terbaru</h3>
+                        
+                    </div>
+                    <div class="activity-list" id="activityFeed">
+                        <div class="empty-state">Belum ada aktivitas</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logs Section -->
+            <section id="logs" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Riwayat Akses</h3>
+                        <div class="card-actions">
+                            <div class="filter-group">
+                                <button class="filter-btn active" data-filter="all">Semua</button>
+                                <button class="filter-btn" data-filter="granted">Berhasil</button>
+                                <button class="filter-btn" data-filter="denied">Ditolak</button>
+                            </div>
+                            <button class="btn-danger" onclick="clearLogs()">Hapus Semua</button>
+                        </div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Waktu</th>
+                                    <th>Metode</th>
+                                    <th>Pengguna</th>
+                                    <th>Status</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTableBody">
+                                <tr><td colspan="5" class="empty-state">Memuat data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Face Registration Section -->
+            <section id="face-registration" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Registrasi Wajah Baru</h3>
+                        <p style="color: var(--text-secondary); margin-top: 5px;">Gunakan kamera perangkat Anda untuk mendaftarkan wajah ke dalam sistem.</p>
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                            
+                            <!-- Left: Video Preview -->
+                            <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                <div style="width: 100%; max-width: 400px; aspect-ratio: 4/3; background: #000; border-radius: 8px; overflow: hidden; position: relative;">
+                                    <video id="webcamVideo" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                                    <div id="captureOverlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.5); display: none; align-items: center; justify-content: center; font-weight: bold; font-size: 24px; color: #000;">
+                                        Menangkap... <span id="captureCount">0</span>/30
+                                    </div>
+                                </div>
+                                <canvas id="webcamCanvas" style="display: none;"></canvas>
+                                <button class="btn-camera" id="btnStartCamera" style="width: 100%; max-width: 400px;">Nyalakan Kamera</button>
+                            </div>
+
+                            <!-- Right: Form -->
+                            <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 15px;">
+                                <div class="form-group">
+                                    <label class="form-label" for="faceName">Nama Lengkap</label>
+                                    <input type="text" id="faceName" class="form-input" placeholder="Masukkan nama (tanpa spasi khusus)">
+                                </div>
+                                
+                                <div class="form-group" style="margin-top: auto;">
+                                    <button class="btn-primary" id="btnRegisterFace" style="width: 100%; padding: 12px; font-size: 16px;" disabled>Mulai Rekam Wajah (30 Frame)</button>
+                                </div>
+                                <p style="font-size: 13px; color: var(--text-secondary);">
+                                    <strong>Instruksi:</strong><br>
+                                    1. Nyalakan kamera.<br>
+                                    2. Masukkan nama Anda.<br>
+                                    3. Tekan tombol rekam dan gerakkan kepala Anda sedikit ke kiri/kanan/atas/bawah selama proses perekaman.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals and Toasts wrapper -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
