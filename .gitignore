@@ -1,0 +1,11 @@
+.env
+firebase-key.json
+
+# API
+api/node_modules/
+
+# Python
+__pycache__/
+*.pyc
+python-face-recognition/known_faces/trained_model.yml
+python-face-recognition/known_faces/label_map.json
